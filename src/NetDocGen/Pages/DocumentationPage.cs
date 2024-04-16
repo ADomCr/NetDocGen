@@ -7,35 +7,38 @@ using System.Threading.Tasks;
 
 namespace NetDocGen.Pages
 {
-	public abstract class DocumentationPage
-	{
-		protected readonly MarkdownFileBuilder builder;
+    public abstract class DocumentationPage
+    {
+        protected readonly MarkdownFileBuilder builder;
 
-		protected readonly string title;
-		protected readonly string outputFolder;
+        protected readonly string title;
+        protected readonly string outputFolder;
 
-		protected DocumentationPage(string title, string outputFolder)
-		{
-			this.title = title;
-			this.outputFolder = outputFolder;
+        protected DocumentationPage(string title, string outputFolder)
+        {
+            this.title = title;
+            this.outputFolder = outputFolder;
 
-			builder = new MarkdownFileBuilder();
-		}
+            builder = new MarkdownFileBuilder();
+        }
 
-		public void Create()
-		{
-			this.builder.Header(1, this.title);
+        public void Create()
+        {
+            this.builder.Header(1, this.title);
 
-			this.build();
+            this.build();
 
-			File.WriteAllText(this.createFilePath(), this.builder.ToString());
-		}
+            File.WriteAllText(this.createFilePath(), this.builder.ToString());
+        }
 
-		protected virtual void build() { }
+        protected virtual void build() { }
 
-		protected virtual string createFilePath()
-		{
-			return Path.Combine(outputFolder, $"{this.title}.md");
-		}
-	}
+        protected virtual string createFilePath()
+        {
+            string filename = $"{this.title}.md";
+            filename = string.Join("_", filename.Split(Path.GetInvalidFileNameChars()));
+
+            return Path.Combine(outputFolder, filename);
+        }
+    }
 }
