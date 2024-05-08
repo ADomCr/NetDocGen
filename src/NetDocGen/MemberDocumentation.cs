@@ -3,7 +3,12 @@ using System.Reflection;
 
 namespace NetDocGen
 {
-	public class MemberDocumentation<T, R> : CommonDocumentation
+	public interface IMemberDocumentation
+	{
+        MemberInfo ReflectionInfo { get; }
+    }
+
+    public class MemberDocumentation<T, R> : CommonDocumentation, IMemberDocumentation
 		where T : MemberInfo
 		where R : CommonDocumentation
 	{
@@ -15,7 +20,9 @@ namespace NetDocGen
 
 		public T ReflectionInfo { get; }
 
-		protected string _fullName;
+		MemberInfo IMemberDocumentation.ReflectionInfo => ReflectionInfo;
+
+        protected string _fullName;
 
 		public MemberDocumentation(string fullname)
 		{

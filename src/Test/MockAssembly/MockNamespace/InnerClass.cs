@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MockAssembly.MockNamespace
+﻿namespace MockAssembly.MockNamespace
 {
-	public class InnerClass
+	/// <summary>
+	/// public class in a namespace
+	/// </summary>
+    public class InnerClass
 	{
-
 	}
 }
